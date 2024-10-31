@@ -17,7 +17,6 @@ public class CustomerManagementMockImpl implements CustomerManagementService {
 		customerMap.put("RM210", new Customer("RM210" ,"River Ltd", "some more notes"));
 	}
 
-
 	@Override
 	public void newCustomer(Customer newCustomer) {
 		customerMap.put(newCustomer.getCustomerId(), newCustomer);
@@ -40,7 +39,7 @@ public class CustomerManagementMockImpl implements CustomerManagementService {
 
 	@Override
 	public List<Customer> findCustomersByName(String name) {
-		List<Customer> list = new ArrayList<Customer>(customerMap.values());
+		List<Customer> list = getAllCustomers();
 
 		for (Customer customer : list) {
 			if(!customer.getCompanyName().equals(name)){
