@@ -8,4 +8,13 @@
 	<bean id="customerManagement"
 		  class="com.yrgo.services.customers.CustomerManagementMockImpl"/>
 
+	<bean id="diaryManagement"
+		  class="com.yrgo.services.diary.DiaryManagementServiceMockImpl"/>
+
+	<bean id="callHandling"
+		  class="com.yrgo.services.calls.CallHandlingServiceImpl">
+			<constructor-arg ref="customerManagement"/>
+			<constructor-arg ref="diaryManagement"/>
+	</bean>
+
 </beans>
