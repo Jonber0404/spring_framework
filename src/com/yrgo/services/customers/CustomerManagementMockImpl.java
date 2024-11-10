@@ -66,7 +66,7 @@ public class CustomerManagementMockImpl implements CustomerManagementService {
 
 	@Override
 	public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
-		getFullCustomerDetail(customerId).addCall(callDetails);
+		findCustomerById(customerId).addCall(callDetails);
 
 	}
 

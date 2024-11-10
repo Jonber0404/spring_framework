@@ -1,5 +1,6 @@
 package com.yrgo.services.calls;
 
+import com.yrgo.dataaccess.RecordNotFoundException;
 import com.yrgo.domain.Action;
 import com.yrgo.domain.Call;
 import com.yrgo.services.customers.CustomerManagementService;
@@ -19,7 +20,7 @@ public class CallHandlingServiceImpl implements CallHandlingService{
     }
 
     @Override
-    public void recordCall(String customerId, Call newCall, Collection<Action> actions) throws CustomerNotFoundException {
+    public void recordCall(String customerId, Call newCall, Collection<Action> actions) throws CustomerNotFoundException, RecordNotFoundException {
         customerManagementService.recordCall(customerId, newCall);
 
         for (Action action: actions) {

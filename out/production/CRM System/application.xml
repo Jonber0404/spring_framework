@@ -5,9 +5,6 @@
 
 	<!-- add your bean definitions here! -->
 
-	<bean id="customerManagement"
-		  class="com.yrgo.services.customers.CustomerManagementMockImpl"/>
-
 	<bean id="diaryManagement"
 		  class="com.yrgo.services.diary.DiaryManagementServiceMockImpl"/>
 
@@ -15,6 +12,32 @@
 		  class="com.yrgo.services.calls.CallHandlingServiceImpl">
 			<constructor-arg ref="customerManagement"/>
 			<constructor-arg ref="diaryManagement"/>
+	</bean>
+
+	<bean id="customerManagement"
+		  class="com.yrgo.services.customers.CustomerManagementServiceProductionImpl">
+		<constructor-arg ref="customerDao">
+		</constructor-arg>
+	</bean>
+
+
+	<bean id="customerDao" class="com.yrgo.dataaccess.CustomerDaoJdbcTemplateImpl"
+		  init-method="createTables">
+		<constructor-arg ref="jdbcTemplate">
+		</constructor-arg>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name= "driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name= "url" value
+				="jdbc:hsqldb:file:database.dat;shutdown=true" />
+		<property name = "username" value="sa"/>
+		<property name="password" value ="" />
+	</bean>
+
+	<bean id="jdbcTemplate"
+		  class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
 	</bean>
 
 </beans>

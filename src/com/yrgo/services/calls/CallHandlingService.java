@@ -2,6 +2,7 @@ package com.yrgo.services.calls;
 
 import java.util.Collection;
 
+import com.yrgo.dataaccess.RecordNotFoundException;
 import com.yrgo.domain.Action;
 import com.yrgo.domain.Call;
 import com.yrgo.services.customers.CustomerNotFoundException;
@@ -13,5 +14,5 @@ public interface CallHandlingService {
 	 * Records a call with the customer management service, and also records
 	 * any actions in the diary service
 	 */
-	public void recordCall(String customerId, Call newCall, Collection<Action> actions) throws CustomerNotFoundException;
+	public void recordCall(String customerId, Call newCall, Collection<Action> actions) throws CustomerNotFoundException, RecordNotFoundException;
 }
