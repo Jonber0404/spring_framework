@@ -1,37 +1,20 @@
-
-
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:aop="http://www.springframework.org/schema/aop"
-	   xsi:schemaLocation=
-			   "http://www.springframework.org/schema/aop
-http://www.springframework.org/schema/aop/spring-aop.xsd
-http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans.xsd">
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- add your bean definitions here! -->
-
-	<bean id="diaryManagement"
-		  class="com.yrgo.services.diary.DiaryManagementServiceMockImpl"/>
-
-	<bean id="callHandling"
-		  class="com.yrgo.services.calls.CallHandlingServiceImpl">
-			<constructor-arg ref="customerManagement"/>
-			<constructor-arg ref="diaryManagement"/>
-	</bean>
-
-	<bean id="customerManagement"
-		  class="com.yrgo.services.customers.CustomerManagementServiceProductionImpl">
-		<constructor-arg ref="customerDao">
-		</constructor-arg>
-	</bean>
-
-
-	<bean id="customerDao" class="com.yrgo.dataaccess.CustomerDaoJdbcTemplateImpl"
-		  init-method="createTables">
-		<constructor-arg ref="jdbcTemplate">
-		</constructor-arg>
-	</bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name= "driverClassName" value="org.hsqldb.jdbcDriver" />
@@ -46,6 +29,10 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 		<constructor-arg ref="dataSource" />
 	</bean>
 
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		  autowire="byName"/>
+
 	<bean id="performanceTimingAdvice"
 		  class="com.yrgo.advice.PerformanceTimingAdvice" />
 	<aop:config>
@@ -54,5 +41,9 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 						pointcut = "execution(* com.yrgo.services..*.*(..))" />
 		</aop:aspect>
 	</aop:config>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<context:component-scan base-package="com.yrgo" />
 
 </beans>

@@ -14,7 +14,6 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- add your bean definitions here! -->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name= "driverClassName" value="org.hsqldb.jdbcDriver" />
@@ -24,14 +23,8 @@
 		<property name="password" value ="" />
 	</bean>
 
-	<bean id="jdbcTemplate"
-		  class="org.springframework.jdbc.core.JdbcTemplate">
-		<constructor-arg ref="dataSource" />
-	</bean>
-
-	<bean id="transactionManager"
-		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-		  autowire="byName"/>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+		  autowire="constructor"/>
 
 	<bean id="performanceTimingAdvice"
 		  class="com.yrgo.advice.PerformanceTimingAdvice" />
@@ -42,8 +35,11 @@
 		</aop:aspect>
 	</aop:config>
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		  autowire="byName"/>
 
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<context:component-scan base-package="com.yrgo" />
 
 </beans>
