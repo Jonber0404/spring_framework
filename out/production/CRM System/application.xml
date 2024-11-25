@@ -29,8 +29,27 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
+	<!-- Configure EntityManagerFactory -->
+	<!-- Not sure what this code does but couldn't use EntityManager otherwise-->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.yrgo.domain" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+			</props>
+		</property>
+	</bean>
+
 	<bean id="transactionManager"
-		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		  class="org.springframework.orm.jpa.JpaTransactionManager"
 		  autowire="byName"/>
 
 	<bean id="performanceTimingAdvice"
