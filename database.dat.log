@@ -1,3 +1,0 @@
-/*C2*/SET SCHEMA PUBLIC
-alter table Customer_TBL_CALL drop constraint UK_klici3tapu1wnmase4vwypfc4
-alter table Customer_TBL_CALL add constraint UK_klici3tapu1wnmase4vwypfc4 unique (calls_id)
